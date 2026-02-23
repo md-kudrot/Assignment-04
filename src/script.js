@@ -16,25 +16,26 @@ const rejectedBtn = document.getElementById("rejected-btn")
 const renderUiSection = document.getElementById("renderUiSection")
 const jobCount = document.getElementById("jobCount")
 const noJobsSection = document.getElementById("noJobsSection")
+console.log(noJobsSection)
 
 let interviewArr = [];
 let rejectedArr = [];
 let currentStatus = 'all'
 
-let interviewArrLen;
-let rejectedArrLen;
+let interviewArrLen = 1;
+let rejectedArrLen = 1;
 
-function noJobShowFunc() {
+// function noJobShowFunc() {
 
-    if (interviewArrLen === 0 || rejectedArrLen === 0) {
-        // console.log(noJobsSection)
-        noJobsSection.classList.remove("hidden")
-    } else {
-        // console.log(rejectedArr.length)
-        noJobsSection.classList.add("hidden")
-    }
+//     if (interviewArrLen === 0 || rejectedArrLen === 0) {
+//         // console.log(noJobsSection)
+//         noJobsSection.classList.remove("hidden")
+//     } else {
+//         // console.log(rejectedArr.length)
+//         noJobsSection.classList.add("hidden")
+//     }
 
-}
+// }
 
 function countLen() {
     total.innerText = mainCartSection.children.length;
@@ -45,10 +46,11 @@ function countLen() {
     rejectedArrLen = rejectedArr.length;
     rejectedCount.innerText = rejectedArrLen;
 
-    noJobShowFunc()
+    // noJobShowFunc()
 }
 
 countLen()
+
 
 function toggleFunc(id) {
     allBtn.classList.remove('bg-[#3B82F6]', 'text-white')
