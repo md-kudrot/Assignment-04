@@ -3,22 +3,49 @@ let total = document.getElementById("total")
 let interviewCount = document.getElementById("interviewCount")
 let rejectedCount = document.getElementById("rejectedCount")
 
+
+const mainContainer = document.querySelector("main");
+
 // button Selection
 const allBtn = document.getElementById("all-btn")
 const interviewBtn = document.getElementById("interview-btn")
 const rejectedBtn = document.getElementById("rejected-btn")
+// const appliedBtn = document.getElementsByClassName("applied-button")
+// console.log(appliedBtn)
+
 const renderUiSection = document.getElementById("renderUiSection")
 const jobCount = document.getElementById("jobCount")
+const noJobsSection = document.getElementById("noJobsSection")
 
 let interviewArr = [];
 let rejectedArr = [];
 let currentStatus = 'all'
 
+let interviewArrLen;
+let rejectedArrLen;
+
+function noJobShowFunc() {
+
+    if (interviewArrLen === 0 || rejectedArrLen === 0) {
+        // console.log(noJobsSection)
+        noJobsSection.classList.remove("hidden")
+    } else {
+        // console.log(rejectedArr.length)
+        noJobsSection.classList.add("hidden")
+    }
+
+}
 
 function countLen() {
     total.innerText = mainCartSection.children.length;
-    interviewCount.innerText = interviewArr.length;
-    rejectedCount.innerText = rejectedArr.length;
+
+    interviewArrLen = interviewArr.length;
+    interviewCount.innerText = interviewArrLen;
+
+    rejectedArrLen = rejectedArr.length;
+    rejectedCount.innerText = rejectedArrLen;
+
+    noJobShowFunc()
 }
 
 countLen()
@@ -33,128 +60,166 @@ function toggleFunc(id) {
     rejectedBtn.classList.add('bg-white', 'text-[#64748B]')
 
     const selectedId = document.getElementById(id)
-    console.log(selectedId)
+    // console.log(selectedId)
 
     currentStatus = id
+    // console.log(currentStatus)
 
     selectedId.classList.remove('bg-white', 'text-[#64748B]')
     selectedId.classList.add('bg-[#3B82F6]', 'text-white')
 
     if (id === "interview-btn") {
+
+        if (interviewArrLen === 0) {
+            // console.log(noJobsSection)
+            noJobsSection.classList.remove("hidden")
+        } else {
+            // console.log(rejectedArr.length)
+            noJobsSection.classList.add("hidden")
+        }
+
+        // noJobShowFunc()
+
         mainCartSection.classList.add('hidden');
         renderUiSection.classList.remove('hidden')
-        interviewUirender()
         jobCount.innerText = `${interviewArr.length} of 8 jobs`
+        interviewUirender()
 
     } else if (id === "all-btn") {
+
+        noJobsSection.classList.add("hidden")
+
+
         mainCartSection.classList.remove("hidden")
         renderUiSection.classList.add("hidden")
         jobCount.innerText = "8 jobs"
+
+
     } else if (id === "rejected-btn") {
+        
+        if (rejectedArrLen === 0) {
+            // console.log(noJobsSection)
+            noJobsSection.classList.remove("hidden")
+        } else {
+            // console.log(rejectedArr.length)
+            noJobsSection.classList.add("hidden")
+        }
+        // noJobShowFunc();
+
         mainCartSection.classList.add('hidden');
         renderUiSection.classList.remove('hidden')
+        jobCount.innerText = `${rejectedArr.length} of 8 jobs`
         rejectedArrUirender()
-        jobCount.innerText = `${interviewArr.length} of 8 jobs`
     }
 
 }
 
-mainCartSection.addEventListener("click", (event) => {
-    console.log(event.target)
-    if (event.target.classList.contains('interviewButton')) {
+
+mainContainer.addEventListener("click", function (event) {
+
+    if (event.target.classList.contains("interviewButton")) {
 
 
-        // console.log(event.target.parentElement.parentElement)
-        const cart = event.target.parentElement.parentElement
-        // console.log(cart)
-        const companyName = cart.querySelector(".companyName").innerText
-        const position = cart.querySelector(".position").innerText
-        const appliedButton = cart.querySelector(".applied-button").innerText
-        const description = cart.querySelector(".description").innerText
-        const interviewButton = cart.querySelector(".interviewButton").innerText
-        const rejectedButton = cart.querySelector(".rejectedButton").innerText
-        const workTime = cart.querySelector(".workTime").innerText
+        const parenNode = event.target.parentNode.parentNode.parentNode;
 
-        const cartData = {
-            companyName,
-            position,
-            appliedButton: "Appiled",
-            description,
-            interviewButton,
-            rejectedButton,
-            workTime
-        }
+        const companyName = parenNode.querySelector(".companyName").innerText;
+        const position = parenNode.querySelector(".position").innerText;
+        const description = parenNode.querySelector(".description").innerText;
+        const interviewButton = parenNode.querySelector(".interviewButton").innerText;
+        const rejectedButton = parenNode.querySelector(".rejectedButton").innerText;
+        const workTime = parenNode.querySelector(".workTime").innerText;
 
-        console.log(cartData)
-        // interviewArr.push(cartData)
-        // console.log(interviewArr.companyName === cartData.companyName)
-        const cartExist = interviewArr.find(item => item.companyName == cartData.companyName)
-        // console.log(cartExist)
-        if (!cartExist) {
-            interviewArr.push(cartData)
-            interviewUirender()
-        }
-
-        // interviewArr = interviewArr.filter(item => item.companyName != cartData.companyName)
-        // console.log(interviewArr)
-        // if (currentStatus == 'interview-btn') {
-        //     interviewUirender()
-        // }
-
-        countLen()
-
-    } else if (event.target.classList.contains('rejectedButton')) {
-        const cart = event.target.parentElement.parentElement
-        // console.log(cart)
-        const companyName = cart.querySelector(".companyName").innerText
-        const position = cart.querySelector(".position").innerText
-        const appliedButton = cart.querySelector(".applied-button").innerText
-        const description = cart.querySelector(".description").innerText
-        const interviewButton = cart.querySelector(".interviewButton").innerText
-        const rejectedButton = cart.querySelector(".rejectedButton").innerText
-        const workTime = cart.querySelector(".workTime").innerText
-
+        parenNode.querySelector(".applied-button").innerText = "Applied";
 
         const cartData = {
             companyName,
             position,
-            appliedButton: "Appiled",
+            appliedButton: "Applied",
             description,
             interviewButton,
             rejectedButton,
             workTime
-        }
+        };
 
-        console.log(cartData)
-        // interviewArr.push(cartData)
-        // console.log(interviewArr.companyName === cartData.companyName)
-        const cartExist = rejectedArr.find(item => item.companyName == cartData.companyName)
-        // console.log(cartExist)
+        const cartExist = interviewArr.find(item => item.companyName == cartData.companyName);
         if (!cartExist) {
-            rejectedArr.push(cartData)
-            rejectedArrUirender()
+            interviewArr.push(cartData);
+        }
+        rejectedArr = rejectedArr.filter(item => item.companyName != cartData.companyName);
+
+
+        if (currentStatus == "rejected-btn") {
+            rejectedArrUirender();
         }
 
-        // rejectedArr = rejectedArr.filter(item => item.companyName != cartData.companyName)
 
-        // if (currentStatus == 'rejected-btn') {
-        //     rejectedArrUirender()
-        // }
+        if (currentStatus == "interview-btn") {
+            interviewUirender();
+        }
 
-        countLen()
+
+
+        countLen();
     }
 
 
-    // console.log(companyName)
-})
+
+    else if (event.target.classList.contains("rejectedButton")) {
+
+
+        const parenNode = event.target.parentNode.parentNode.parentNode;
+
+        const companyName = parenNode.querySelector(".companyName").innerText;
+        const position = parenNode.querySelector(".position").innerText;
+        const description = parenNode.querySelector(".description").innerText;
+        const interviewButton = parenNode.querySelector(".interviewButton").innerText;
+        const rejectedButton = parenNode.querySelector(".rejectedButton").innerText;
+        const workTime = parenNode.querySelector(".workTime").innerText;
+
+        parenNode.querySelector(".applied-button").innerText = "Rejected";
+
+        const cartData = {
+            companyName,
+            position,
+            appliedButton: "Rejected",
+            description,
+            interviewButton,
+            rejectedButton,
+            workTime
+        };
+
+        const cartExist = rejectedArr.find(item => item.companyName == cartData.companyName);
+        if (!cartExist) {
+            rejectedArr.push(cartData);
+        }
+
+
+        interviewArr = interviewArr.filter(item => item.companyName != cartData.companyName);
+
+
+        if (currentStatus == "interview-btn") {
+            interviewUirender();
+        }
+
+
+
+
+        countLen();
+
+
+    }
+
+});
+
+
 
 
 function interviewUirender() {
-    console.log(interviewArr)
+    // console.log(interviewArr)
     renderUiSection.innerHTML = ""
 
     for (let cartObj of interviewArr) {
-
+        // console.log(cartObj)
 
 
         const div = document.createElement("div");
