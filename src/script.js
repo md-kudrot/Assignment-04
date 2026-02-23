@@ -82,7 +82,7 @@ function toggleFunc(id) {
 
         mainCartSection.classList.add('hidden');
         renderUiSection.classList.remove('hidden')
-        jobCount.innerText = `${interviewArr.length} of 8 jobs`
+        jobCount.innerText = `${interviewArr.length} of ${mainCartSection.children.length} jobs`
         interviewUirender()
 
     } else if (id === "all-btn") {
@@ -92,11 +92,11 @@ function toggleFunc(id) {
 
         mainCartSection.classList.remove("hidden")
         renderUiSection.classList.add("hidden")
-        jobCount.innerText = "8 jobs"
+        jobCount.innerText = `${mainCartSection.children.length} jobs`
 
 
     } else if (id === "rejected-btn") {
-        
+
         if (rejectedArrLen === 0) {
             // console.log(noJobsSection)
             noJobsSection.classList.remove("hidden")
@@ -108,7 +108,7 @@ function toggleFunc(id) {
 
         mainCartSection.classList.add('hidden');
         renderUiSection.classList.remove('hidden')
-        jobCount.innerText = `${rejectedArr.length} of 8 jobs`
+        jobCount.innerText = `${rejectedArr.length} of ${mainCartSection.children.length} jobs`
         rejectedArrUirender()
     }
 
@@ -207,6 +207,32 @@ mainContainer.addEventListener("click", function (event) {
         countLen();
 
 
+    }
+
+
+    else if (event.target.classList.contains("deleteIcon")) {
+
+        const card = event.target.parentNode.parentNode.parentNode.parentNode.parentNode;
+        
+        // card.remove();
+
+        const companyName = card.querySelector(".companyName").innerText;
+        // console.log(companyName)
+
+        card.remove();
+
+        interviewArr = interviewArr.filter(item => item.companyName != companyName);
+        
+        rejectedArr = rejectedArr.filter(item => item.companyName != companyName);
+
+        if (currentStatus == "interview-btn") {
+            interviewUirender();
+        } else if (currentStatus == "rejected-btn") {
+            rejectedArrUirender();
+        }
+
+        jobCount.innerText = `${mainCartSection.children.length} jobs`
+        countLen();
     }
 
 });
