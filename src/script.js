@@ -15,27 +15,32 @@ const rejectedBtn = document.getElementById("rejected-btn")
 
 const renderUiSection = document.getElementById("renderUiSection")
 const jobCount = document.getElementById("jobCount")
-const noJobsSection = document.getElementById("noJobsSection")
-console.log(noJobsSection)
+// const noJobsSection = document.getElementById("noJobsSection")
+// console.log(noJobsSection)
 
 let interviewArr = [];
 let rejectedArr = [];
 let currentStatus = 'all'
 
-let interviewArrLen = 1;
-let rejectedArrLen = 1;
+let interviewArrLen = 0;
+let rejectedArrLen = 0;
 
-// function noJobShowFunc() {
 
-//     if (interviewArrLen === 0 || rejectedArrLen === 0) {
-//         // console.log(noJobsSection)
-//         noJobsSection.classList.remove("hidden")
-//     } else {
-//         // console.log(rejectedArr.length)
-//         noJobsSection.classList.add("hidden")
-//     }
+function showEmptyCard(section) {
+    section.innerHTML = "";
 
-// }
+    const div = document.createElement("div");
+    div.className =
+        "card flex flex-col justify-center items-center border border-gray-100 bg-white rounded-sm p-8 text-center";
+
+    div.innerHTML = `
+      <img class="w-[15%]" src="./img/assignment_7959593 1.png" alt="">
+      <h1 class="text-[#002C5C] text-2xl font-semibold">No jobs available</h1>
+      <p class="text-[#64748B]">Check back soon for new job opportunities</p>
+  `;
+
+    section.appendChild(div);
+}
 
 function countLen() {
     total.innerText = mainCartSection.children.length;
@@ -46,10 +51,26 @@ function countLen() {
     rejectedArrLen = rejectedArr.length;
     rejectedCount.innerText = rejectedArrLen;
 
-    // noJobShowFunc()
+
 }
 
-countLen()
+
+function jobCountUpdate() {
+
+    if (currentStatus === "interview-btn") {
+        jobCount.innerText = `${interviewArr.length} of ${mainCartSection.children.length} jobs`;
+    } else if (currentStatus === "rejected-btn") {
+        jobCount.innerText = `${rejectedArr.length} of ${mainCartSection.children.length} jobs`;
+    } else {
+        jobCount.innerText = `${mainCartSection.children.length} jobs`;
+    }
+
+}
+
+countLen();
+jobCountUpdate();
+
+
 
 
 function toggleFunc(id) {
@@ -72,47 +93,29 @@ function toggleFunc(id) {
 
     if (id === "interview-btn") {
 
-        if (interviewArrLen === 0) {
-            // console.log(noJobsSection)
-            noJobsSection.classList.remove("hidden")
-        } else {
-            // console.log(rejectedArr.length)
-            noJobsSection.classList.add("hidden")
-        }
+        mainCartSection.classList.add("hidden");
+        renderUiSection.classList.remove("hidden");
 
-        // noJobShowFunc()
-
-        mainCartSection.classList.add('hidden');
-        renderUiSection.classList.remove('hidden')
-        jobCount.innerText = `${interviewArr.length} of ${mainCartSection.children.length} jobs`
-        interviewUirender()
+        jobCount.innerText = `${interviewArr.length} of ${mainCartSection.children.length} jobs`;
+        interviewUirender();
 
     } else if (id === "all-btn") {
 
-        noJobsSection.classList.add("hidden")
+        mainCartSection.classList.remove("hidden");
+        renderUiSection.classList.add("hidden");
 
-
-        mainCartSection.classList.remove("hidden")
-        renderUiSection.classList.add("hidden")
-        jobCount.innerText = `${mainCartSection.children.length} jobs`
+        jobCount.innerText = `${mainCartSection.children.length} jobs`;
 
 
     } else if (id === "rejected-btn") {
 
-        if (rejectedArrLen === 0) {
-            // console.log(noJobsSection)
-            noJobsSection.classList.remove("hidden")
-        } else {
-            // console.log(rejectedArr.length)
-            noJobsSection.classList.add("hidden")
-        }
-        // noJobShowFunc();
+        mainCartSection.classList.add("hidden");
+        renderUiSection.classList.remove("hidden");
 
-        mainCartSection.classList.add('hidden');
-        renderUiSection.classList.remove('hidden')
-        jobCount.innerText = `${rejectedArr.length} of ${mainCartSection.children.length} jobs`
-        rejectedArrUirender()
+        jobCount.innerText = `${rejectedArr.length} of ${mainCartSection.children.length} jobs`;
+        rejectedArrUirender();
     }
+    jobCountUpdate();
 
 }
 
@@ -162,6 +165,7 @@ mainContainer.addEventListener("click", function (event) {
 
 
         countLen();
+        jobCountUpdate();
     }
 
 
@@ -207,7 +211,7 @@ mainContainer.addEventListener("click", function (event) {
 
 
         countLen();
-
+        jobCountUpdate();
 
     }
 
@@ -215,7 +219,7 @@ mainContainer.addEventListener("click", function (event) {
     else if (event.target.classList.contains("deleteIcon")) {
 
         const card = event.target.parentNode.parentNode.parentNode.parentNode.parentNode;
-        
+
         // card.remove();
 
         const companyName = card.querySelector(".companyName").innerText;
@@ -224,7 +228,7 @@ mainContainer.addEventListener("click", function (event) {
         card.remove();
 
         interviewArr = interviewArr.filter(item => item.companyName != companyName);
-        
+
         rejectedArr = rejectedArr.filter(item => item.companyName != companyName);
 
         if (currentStatus == "interview-btn") {
@@ -233,7 +237,8 @@ mainContainer.addEventListener("click", function (event) {
             rejectedArrUirender();
         }
 
-        jobCount.innerText = `${mainCartSection.children.length} jobs`
+        // jobCount.innerText = `${mainCartSection.children.length} jobs`
+        jobCountUpdate();
         countLen();
     }
 
@@ -245,6 +250,11 @@ mainContainer.addEventListener("click", function (event) {
 function interviewUirender() {
     // console.log(interviewArr)
     renderUiSection.innerHTML = ""
+
+    if (interviewArr.length === 0) {
+        showEmptyCard(renderUiSection);
+        return;
+    }
 
     for (let cartObj of interviewArr) {
         // console.log(cartObj)
@@ -291,8 +301,14 @@ function interviewUirender() {
     }
 }
 function rejectedArrUirender() {
-    console.log(interviewArr)
+    // console.log(interviewArr)
     renderUiSection.innerHTML = ""
+
+    if (rejectedArr.length === 0) {
+        showEmptyCard(renderUiSection);
+        return;
+    }
+
 
     for (let cartObj of rejectedArr) {
 
