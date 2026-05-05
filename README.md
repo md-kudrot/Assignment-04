@@ -1,3 +1,133 @@
+# Job Application Tracker
+
+A clean, responsive job application tracker built with HTML, CSS, JavaScript, and Tailwind CSS v4. The app lets you manage a small set of job cards, mark them as Interview or Rejected, filter the list by status, and remove entries from the board.
+
+## Features
+
+- Browse 8 prebuilt job cards with company, role, location, salary, and description details.
+- Mark any job as `Interview` or `Rejected`.
+- Filter the board by `All`, `Interview`, or `Rejected`.
+- Track live totals for all jobs, interview jobs, and rejected jobs.
+- Delete job cards from the list.
+- Show an empty state when a filtered view has no results.
+- Responsive layout built with Tailwind utility classes.
+
+## Tech Stack
+
+- HTML5
+- CSS3
+- JavaScript (DOM manipulation)
+- Tailwind CSS v4
+
+## Project Structure
+
+```text
+Assignment-4/
+├── package.json
+├── package-lock.json
+├── README.md
+└── src/
+    ├── index.html
+    ├── input.css
+    ├── output.css
+    ├── script.js
+    ├── style.css
+    └── img/
+```
+
+## How It Works
+
+- The main UI is defined in [src/index.html](src/index.html).
+- The interaction logic lives in [src/script.js](src/script.js).
+- Tailwind is imported through [src/input.css](src/input.css), and the generated styles are served from [src/output.css](src/output.css).
+- The app keeps two in-memory lists for interview and rejected jobs, then re-renders the filtered view based on the active tab.
+
+## Getting Started
+
+This project is a static front-end app, so there is no `npm run dev` script configured in `package.json`.
+
+### 1. Install dependencies
+
+```bash
+npm install
+```
+
+### 2. Open the app
+
+Open [src/index.html](src/index.html) directly in your browser, or use a local static server such as VS Code Live Server.
+
+### 3. Rebuild Tailwind CSS after style changes
+
+If you edit Tailwind classes or [src/input.css](src/input.css), regenerate [src/output.css](src/output.css) with the Tailwind CLI:
+
+```bash
+npx @tailwindcss/cli -i ./src/input.css -o ./src/output.css --watch
+```
+
+## Usage
+
+1. Click `Interview` or `Rejected` on any job card to update its status.
+2. Use the filter buttons at the top to switch between all jobs and status-specific views.
+3. Click the delete icon on a card to remove it from the board.
+4. Watch the counters update as you manage the list.
+
+## Notes
+
+- Job data is currently hard-coded in the HTML file for simplicity.
+- All state is managed in the browser, so reloading the page resets the tracker.
+- The empty-state UI appears when a filtered list has no items.
+
+## License
+
+No license has been specified for this project.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## 1.What is the difference between getElementById, getElementsByClassName, and querySelector / querySelectorAll?
 Ans :
 
