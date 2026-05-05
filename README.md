@@ -2,6 +2,18 @@
 
 A clean, responsive job application tracker built with HTML, CSS, JavaScript, and Tailwind CSS v4. The app lets you manage a small set of job cards, mark them as Interview or Rejected, filter the list by status, and remove entries from the board.
 
+
+<img width="1620" height="696" alt="image" src="https://github.com/user-attachments/assets/ebf3866e-0fc1-467a-a106-9d162fab5389" />
+
+
+
+
+
+
+
+
+
+
 ## Features
 
 - Browse 8 prebuilt job cards with company, role, location, salary, and description details.
